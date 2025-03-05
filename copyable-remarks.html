@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copyable Remarks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .remark-container {
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        .remark-header {
+            background-color: #f4f4f4;
+            padding: 10px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .remark-list {
+            padding: 0;
+            margin: 0;
+        }
+        .remark-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .copy-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        .copy-all-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .copy-all-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <h1>Remark</h1>
+    
+    <div id="remarks-container"></div>
+
+    <script>
+        const remarks = [
+            "|Warranty Lens 1 year| Prescriptions changed",
+            "| Warranty Lens 1 year | Customer requested prescription but can not get used.",
+            "|Warranty Lens 1 year | Customer used to FOP but can not get used.",
+            "| Warranty Frame 1 year| Factory error | Old Model :",
+            "| Exchange 1 Month | OUT OF WARRANTY | Change frame model | Old Model :",
+            "| Exchange 1 Month | OUT OF WARRANTY | Change type of lens to ...",
+            "| Warranty -50%Frame+Lens | OUT OF WARRANTY | Old Frame :",
+            "| Warranty -50%Frame Only | OUT OF WARRANTY | Old Frame :",
+            "| Warranrty -50%Lens Only | OUT OF WARRANTY",
+            "|2nd pair 25% Dis",
+            "3rd pair 25% Dis",
+            "| Prescription error | Customer feel uncomfortable",
+            "| Lens Redemption",
+            "| Extended 15% Dis"
+        ];
+
+        function createRemarksList() {
+            const container = document.getElementById('remarks-container');
+            
+            const copyAllBtn = document.createElement('button');
+            copyAllBtn.textContent = 'Copy All Remarks';
+            copyAllBtn.className = 'copy-all-btn';
+            copyAllBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(remarks.join('\n')).then(() => {
+                    copyAllBtn.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyAllBtn.textContent = 'Copy All Remarks';
+                    }, 1500);
+                });
+            });
+            container.appendChild(copyAllBtn);
+
+            remarks.forEach((remark, index) => {
+                const remarkItem = document.createElement('div');
+                remarkItem.className = 'remark-item';
+
+                const remarkText = document.createElement('span');
+                remarkText.textContent = remark;
+
+                const copyBtn = document.createElement('button');
+                copyBtn.textContent = 'Copy';
+                copyBtn.className = 'copy-btn';
+                copyBtn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(remark).then(() => {
+                        copyBtn.textContent = 'Copied!';
+                        setTimeout(() => {
+                            copyBtn.textContent = 'Copy';
+                        }, 1500);
+                    });
+                });
+
+                remarkItem.appendChild(remarkText);
+                remarkItem.appendChild(copyBtn);
+                container.appendChild(remarkItem);
+            });
+        }
+
+        // Initialize the remarks list when the page loads
+        window.onload = createRemarksList;
+    </script>
+</body>
+</html>
